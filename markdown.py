@@ -127,49 +127,72 @@ def parse_markdown(content, nofollow=True):
 	content = content.replace(r'\.', '&#46;')
 	content = content.replace(r'\,', '&#44;')
 
+
+	# inline hyperlinks
+	content = re.sub(r'(?<!\]\()\b(https?:\/\/[\w\-.]{1,}\.[a-z]+)\b', r'<a href="\1">\1</a>', content)
+
+	# left images
 	content = re.sub(
 		img_left_pattern,
 		create_responsive_image(classes=['float-left']),
 		content
-	) # left images
+	)
 
+	# right images
 	content = re.sub(
 		img_right_pattern,
 		create_responsive_image(classes=['float-right']),
 		content
-	) # right images
+	)
 
+	# images
 	content = re.sub(
 		img_pattern,
 		create_responsive_image(),
 		content
-	) # images
+	)
 
-
+	# external anchors
 	content = re.sub(
 		r'\[(.{1,}?)\]\((https?:\/\/[\w\-.\/:?=#]+)\)',
 		r'<a href="\2" target="_blank" rel="noreferrer">\1</a>',
 		content
-	) # external anchors
+	)
+
+	# relative anchors
 	content = re.sub(
 		r'\[(.{1,}?)\]\(([\w\-.\/:?=#]+)\)',
 		r'<a href="\2" target="_blank" aria-label="\1">\1</a>',
 		content
-	) # anchors
-	content = re.sub(r'(?<!["\w])(https?:\/\/[\w\-.]{1,})(?<!["\w])', r'<a href="\1">\1</a>', content)
+	)
+
+	# code block
 	content = re.sub(r'```(\w+|)\n?([\0-\255]+)```', hl_codeblock, content)
+
 	# inline code block
 	content = re.sub(r'`(.{1,}?)`', r'<code>\1</code>', content)
+
+	# block quote
 	content = re.sub(r'^&gt; (.{1,}?)\n', r'<blockquote>\1</blockquote>', content, flags=re.MULTILINE)
+
+	# bold
 	content = re.sub(r'\*\*(.{1,}?)\*\*', r'<b>\1</b>', content)
+
+	# italic
 	content = re.sub(r'\*(.{1,}?)\*', r'<i>\1</i>', content)
+
+	# center
 	content = re.sub(r'\|\|(.{1,}?)\|\|', r'<span class="center">\1</span>', content)
+
+	# titles
 	content = re.sub(r'^###### (.+)\n', r'<h6>\1</h6>\n', content, flags=re.MULTILINE)
 	content = re.sub(r'^##### (.+)\n', r'<h6>\1</h6>\n', content, flags=re.MULTILINE)
 	content = re.sub(r'^#### (.+)\n', r'<h5>\1</h5>\n', content, flags=re.MULTILINE)
 	content = re.sub(r'^### (.+)\n', r'<h4>\1</h4>\n', content, flags=re.MULTILINE)
 	content = re.sub(r'^## (.+)\n', r'<h3>\1</h3>\n', content, flags=re.MULTILINE)
 	content = re.sub(r'^# (.+)\n', r'<h2>\1</h2>\n', content, flags=re.MULTILINE)
+
+	# horizontal rule
 	content = re.sub(r'\n([-_*])\1{2,}\n', '<hr>\n', content)
 
 
