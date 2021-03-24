@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<style>
+.center-vertical-container {
+	height: calc(100% - 3rem)
+}
+</style>
+{% endblock %}
+{% block body %}
+<div class="viewport-height">
+	<div class="center-vertical-container">
+		<div class="table-center">
+			<a href="/">
+				<svg class="back-arrow hover-light stroke-light" height="43" width="23">
+					<path d="M 22 0 l -20 20 l 20 20"
+				stroke-width="3" fill="none"/>
+				</svg>
+			</a>
+			<h1 class="typewriter title">Coming soon</h1>
+		</div>
+	</div>
+	{% block footer %}
+	{{ super() }}
+	{% endblock %}
+</div>
+{% endblock %}

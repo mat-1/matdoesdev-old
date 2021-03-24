@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+	{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="{% block description %}Hello, I am mat and I occasionally do dev sometimes. My hobbies include coding, hacking, writing software, software development, computing, and other synonyms for programming. I will use this website to share my projects and opinions.{% endblock %}">
+	<meta name="theme-color" content="#010101">
+  <meta name="robots" content="index, follow">
+	<meta property="og:title" content="{% block ogtitle %}mat does dev{% endblock %}">
+	<meta property="og:description" content="{% block ogdescription %}Hello, I am mat and I occasionally do dev sometimes. My hobbies include coding, hacking, writing software, software development, computing, and other synonyms for programming. I will use this website to share my projects and opinions.{% endblock %}">
+	<meta property="og:site_name" content="mat does dev">
+	<meta property="og:type" content="{% block ogtype %}website{% endblock %}"/>
+	<meta name="msvalidate.01" content="A9A707E08BBF89790B637CF5F38FBA78"/>
+	<meta name="yandex-verification" content="53b182089a88e6f4"/>
+	<script><< loadurl https://cdn.matdoes.dev/estel.js >></script>
+	<style><< loadurl https://cdn.matdoes.dev/main.css >></style>
+	<!-- <link rel="stylesheet" href="https://cdn.matdoes.dev/main.css" defer> -->
+	<link rel="shortcut icon" type="image/png" href="//cdn.matdoes.dev/favicon.png"/>
+	<link rel="canonical" href="<< url >>">
+	<link rel="manifest" href="//cdn.matdoes.dev/manifest.webmanifest">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="mat does dev">
+	<link rel="apple-touch-icon" href="//cdn.matdoes.dev/favicon.png">
+	<link rel="apple-touch-startup-image" href="//cdn.matdoes.dev/favicon.png">
+	<link rel="alternate" type="application/rss+xml" title="mat does dev blog" 
+  href="/rss">
+	<link rel="sitemap" href="/sitemap.xml" />
+  <title>{% block title %}mat does dev{% endblock %}</title>
+	<style><< loadurl https://cdn.matdoes.dev/spinner.css >></style>
+	<noscript><style>#loading-cover,.lazy{display:none}</style></noscript>
+<script>
+window.addEventListener('load', function() {
+	console.log('Page loaded')
+	document.getElementById("loading-cover").remove()
+}, false)
+</script>
+	{% endblock %}
+</head>
+<body>
+	{% block allbody %}
+	
+		<div id="loading-cover">
+			<div class="loading">
+				<div class="loading-container">
+					<svg height="50" width="50">
+					<circle cx="0" cy="0" r="50" fill="none" stroke="#fff"/>
+					</svg>
+				</div>
+			</div>
+		</div>
+		{% block body %}
+			<main>
+				{% block content %}
+				No content here yet, check back later.
+				{% endblock %}
+			</main>
+			{% block footer %}
+			<footer>
+				{% block footer_content %}
+				© {{ year }} matdoesdev
+				{% endblock %}
+			</footer>
+			{% endblock %}
+		{% endblock %}
+	{% endblock %}
+</body>
+</html>

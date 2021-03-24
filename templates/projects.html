@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block body %}
+<style>body{scroll-behavior:smooth}</style>
+<div class="center-vertical-container text-center">
+	<div class="center-vertical-content">
+		<a href="/">
+			<svg class="back-arrow hover-light stroke-light" height="43" width="23">
+				<path d="M 22 0 l -20 20 l 20 20"
+			stroke-width="3" fill="none"/>
+			</svg>
+		</a>
+		<h1 class="title typewriter">Projects</h1>
+		<a href="#project-1" id="first-arrow"><svg class="mt-5 hover-light stroke-light" height="22" width="40">
+			<path d="M 0 0 l 20 20 l 20 -20" stroke-width="3" fill="none"/>
+		</svg></a>
+	</div>
+</div>
+
+<div id="project-list">
+	{% for project in projects %}
+		{% set i = loop.index %}
+		<div class="viewport-height">
+			<div id="project-{{i}}" class="project center-vertical-container{{' darkbg' if i%2!=0 else ''}}">
+				<div class="table-center text-center">
+					<a href="{{ project.url }}" class="project-title" target="_blank">
+						<h2>{{ project.name|safe }}</h2>
+					</a>
+					<p>{{ project.description|safe }}</p>
+					{% if i < projects|length %}
+						<a href="#project-{{ i+1 }}">
+							<svg class="arrow hover-light stroke-light" height="22" width="40">
+								<path d="M 0 0 l 20 20 l 20 -20" stroke-width="3" fill="none"/>
+							</svg>
+						</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+{% block footer %}
+	{% if projects|length % 2 == 0 %}
+		{{ super() }}
+	{% else %}
+		<div class="darkbg">
+			{{ super() }}
+		</div>
+	{% endif %}
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,4 @@
+jinja2
+motor
+aiohttp
+dnspython==1.16.0

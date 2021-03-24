@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<style>
+.center-vertical-container {
+	height: calc(100% - 3rem)
+}
+</style>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+	function onSubmit(token) {
+		var loginForm = document.getElementById('login')
+		var input = document.createElement('input')
+		input.type = 'hidden';
+		input.name = 'ref'
+		input.value = document.referrer
+		console.log('Referrer: '+document.referrer)
+		loginForm.appendChild(input)
+		loginForm.submit()
+	}
+</script>
+{% endblock %}
+{% block body %}
+<div class="viewport-height">
+	<div class="center-vertical-container">
+		<div class="table-center">
+			<h1 class="title-2">Login</h1>
+			<form id="login" action="/blog/login" method="post">
+				<label for="username">Username</label>
+				<input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+				<button type="submit" class="big-button g-recaptcha" data-sitekey="6LcBuZYUAAAAALZ53ds9k5gLHqcuqFLg2B8JmHkE" data-callback="onSubmit">Login</button>
+			</form>
+		</div>
+	</div>
+
+	{% block footer %}
+	{{ super() }}
+	{% endblock %}
+</div>
+{% endblock %}
+

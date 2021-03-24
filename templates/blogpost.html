@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block ogtype %}blog{% endblock %}
+{% block ogtitle %}{{ p.title }}{% endblock %}
+{% block title %}{{ p.title }} | mat does dev blog{% endblock %}
+{% block description %}{{ p.description }}{% endblock %}
+{% block ogdescription %}{{ p.description }}{% endblock %}
+
+{% block head %}
+{{ super() }}
+<style><< loadurl https://cdn.matdoes.dev/highlight.css >></style>
+<script><< loadurl https://cdn.matdoes.dev/highlight.js >></script>
+<script>hljs.initHighlightingOnLoad()</script>
+{% if p.image is not none %}
+<meta property="og:image:url" content="{{ p.image.url }}">
+<meta property="og:image:secure_url" content="{{ p.image.url }}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="{{ p.image.alt }}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="matdoesdev">
+<meta name="twitter:title" content="{{ p.title }}">
+<meta name="twitter:description" content="{{ p.description }}">
+<meta name="twitter:image:src" content="{{ p.image.url }}">
+<script>
+function loadImages() {
+	for (let im of document.getElementsByClassName('lazy')) {
+		im.src = im.attributes['data-src'].value
+		if (im.complete) {
+			im.classList.remove('lazy')
+		} else {
+			im.addEventListener('load', function() {
+				im.classList.remove('lazy')
+			})
+		}
+	}
+}
+addEventListener('load', loadImages)
+</script>
+{% endif %}
+<link rel="dns-prefetch" href="https://cdn.matdoes.dev">
+
+{% endblock %}
+{% block body %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ p.url }}"
+  },
+	"articleBody": "{{ p.html }}",
+  "headline": "{{ p.title }}",
+  {% if p.image is not none %}
+  "image": {
+		"@type": "imageObject",
+		"url": "{{ p.image.url }}",
+		"height": "{{ p.image.size[1] }}",
+		"width": "{{ p.image.size[0] }}"
+	},
+	{% endif %}
+  "datePublished": "{{ p.datetime }}",
+  "dateModified": "{{ p.datetime }}",
+  "author": {
+    "@type": "Person",
+    "name": "mat"
+  },
+   "publisher": {
+    "@type": "Organization",
+    "name": "matdoesdev",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdn.matdoes.dev/favicon.png"
+    }
+  },
+  "description": "{{ p.preview }}"
+}
+</script>
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+var textareas = document.getElementsByTagName('textarea')
+var count = textareas.length;
+for(var i=0;i<count;i++){
+	textareas[i].onkeydown = function(e){
+		if(e.keyCode==9 || e.which==9){
+			e.preventDefault();
+			var s = this.selectionStart;
+			this.value = this.value.substring(0,this.selectionStart) + '\t' + this.value.substring(this.selectionEnd);
+			this.selectionEnd = s + 1; 
+		}
+	}
+}
+},false)</script>
+<div class="content">
+	{% if is_preview %}
+		<div onclick="window.close()">
+			<svg class="back-arrow hover-light stroke-light" height="43" width="23">
+				<path d="M 22 0 l -20 20 l 20 20"
+			stroke-width="3" fill="none"/>
+			</svg>
+		</div>
+
+	{% else %}
+		<a href="/blog" aria-label="back">
+			<svg class="back-arrow hover-light stroke-light" height="43" width="23">
+				<path d="M 22 0 l -20 20 l 20 20"
+			stroke-width="3" fill="none"/>
+			</svg>
+		</a>
+	{% endif %}
+	<main>
+		<article>
+			<h1 class="blog-post-title">{{ p.title }}</h1>
+			<em class="blog-post-readtime">{{ p.readtime }}</em>
+			{% if is_admin %}<a class="big-button" href="/blog/edit/{{ p.slug }}">Edit</a>{% endif %}
+			<hr style="opacity:0.2;width:80%">
+			<p>{{ p.html|safe }}</p>
+		</article>
+	</main>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<style>
+.center-vertical-container {
+	height: calc(100% - 3rem)
+}
+#post-body, #post-title {
+  background-color: #111;
+  color: #aaa
+}
+</style>
+<script>
+window.addEventListener('load', function() {
+var title = document.getElementById('post-title')
+title.value = localStorage.getItem('post-title')
+title.addEventListener('input', function (e) {
+	localStorage.setItem('post-title', e.target.value)
+
+})
+
+
+var postBody = document.getElementById('post-body')
+var wordCountEl = document.getElementById('wordcount')
+postBody.value = localStorage.getItem('post-body')
+postBody.addEventListener('input', function (e) {
+	localStorage.setItem('post-body', e.target.value)
+	const postBodyModified = e.target.value.replace(/[^a-zA-Z ]/, '')
+	const wordCount = postBodyModified.replace(/ +/, ' ').split(' ').length
+	if (wordCount == 1)
+		wordcount.innerHTML = `1 word long`
+	else
+		wordcount.innerHTML = `${wordCount} words long`
+})
+
+var textareas = document.getElementsByTagName('textarea')
+var count = textareas.length;
+for(var i=0;i<count;i++){
+	textareas[i].onkeydown = function(e){
+		if(e.keyCode==9 || e.which==9){
+			e.preventDefault();
+			var s = this.selectionStart;
+			this.value = this.value.substring(0,this.selectionStart) + '\t' + this.value.substring(this.selectionEnd);
+			this.selectionEnd = s + 1; 
+		}
+	}
+}
+}, false)
+
+function preview() {
+	var form = document.getElementById('post')
+	form.target = '_blank'
+	form.action = '/blog/preview';
+	form.submit()
+	form.action = '/blog/new'
+	form.target = ''
+}
+</script>
+{% endblock %}
+{% block body %}
+<div class="viewport-height">
+	<div class="center-vertical-container">
+		<div class="table-center">
+			<div id="newpost">
+				<h1 class="title-2">New post</h1>
+				Author: {{ username }}
+				<form action="/blog/new" method="post" enctype="multipart/form-data" id="post">
+					<div class="form-group">
+						<label for="post-title">Title</label>
+						<input type="text" class="form-control w-100" id="post-title" placeholder="Enter title" name="title" required>
+					</div>
+					<div class="form-group">
+						<label for="post-body">Content</label>
+						<textarea class="form-control" id="post-body" rows="8" name="body" required></textarea>
+					</div>
+					<div id="wordcount">0 words long</div>
+					<button type="submit" class="big-button">Publish</button>
+					<button type="button" onclick="preview()" class="big-button">Preview</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	{% block footer %}
+	{{ super() }}
+	{% endblock %}
+</div>
+{% endblock %}
+

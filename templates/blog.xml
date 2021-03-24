@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+<channel>
+  <title>matdoesdev blog</title>
+  <link>https://www.matdoes.dev/blog</link>
+	<language>en</language>
+  <description>Dev-related things</description>
+	{% for p in posts %}
+		<item>
+			<title>{{ p.title }}</title>
+			<link>https://www.matdoes.dev/blog/post/{{ p.slug }}</link>
+			<description>{{ p.html }}</description>
+			<pubDate>{{ p.time }}</pubDate>
+		</item>
+	{% endfor %}
+</channel>
+
+</rss> 

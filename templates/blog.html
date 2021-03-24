@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}mat does dev blog{% endblock %}
+{% block ogtitle %}mat does dev blog{% endblock %}
+{% block description %}{{ posts[-1].preview }}
+{% endblock %}
+{% block ogdescription %}Welcome to the matdoes.dev blog.{% endblock %}
+{% block head %}
+{{ super() }}
+<script>
+function loadImages() {
+	for (let im of document.getElementsByClassName('lazy')) {
+		im.src = im.attributes['data-src'].value
+		if (im.complete) {
+			im.classList.remove('lazy')
+		} else {
+			im.addEventListener('load', function() {
+				im.classList.remove('lazy')
+			})
+		}
+	}
+}
+window.addEventListener('load', loadImages)
+window.addEventListener('DOMContentLoaded', loadImages)
+
+</script>
+{% endblock %}
+{% block body %}
+<style>
+.blog-posts {
+	margin-bottom: 20vh
+}
+i {
+	opacity: 0.7;
+	font-size: 70%;
+	padding-bottom: 2em;
+	font-style: normal;
+}
+h2 {
+	margin-bottom: 0;
+}
+</style>
+<div class="viewport-height">
+	<div class="center-vertical-container">
+		<div class="table-center">
+			<a href="/">
+				<svg class="back-arrow hover-light stroke-light" height="43" width="23">
+					<path d="M 22 0 l -20 20 l 20 20"
+				stroke-width="3" fill="none"/>
+				</svg>
+			</a>
+			<h1 class="title typewriter">mat does dev blog</h1>
+		</div>
+	</div>
+</div>
+<div class="content blog-posts">
+	{% if is_admin %}
+	<a href="/blog/new" class="big-button" id="new-post">New post</a>
+	{% endif %}
+	{% set prev_height = 5 %}
+	{% for p in posts|reverse %}
+	<div class="blog-post">
+		<a style="color:inherit;text-decoration:none{% if p.hidden %};opacity:.5{% endif %}" href="/blog/post/{{ p.slug }}">
+			<h2>{{ p.title }}</h2>
+			<i>{% if p.hidden %}[HIDDEN] {% endif %}Posted {{ p.timeago }}</i>
+			<div class="preview">
+				{% if p.image %}
+				{{ image(p.image.url, p.title)|safe }}
+				{% endif %}
+				<p>{{ p.text|safe }}</p>
+			</div>
+		</a>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}

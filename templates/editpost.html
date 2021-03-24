@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<style>
+.center-vertical-container {
+	height: calc(100% - 3rem)
+}
+#post-body, #post-title {
+  background-color: #111;
+  color: #aaa
+}
+</style>
+<script>
+window.addEventListener('load', function() {
+{% if new %}
+var title = document.getElementById('post-title')
+title.value = localStorage.getItem('post-title')
+title.addEventListener('input', function (e) {
+	localStorage.setItem('post-title', e.target.value)
+
+})
+{% endif %}
+var postBody = document.getElementById('post-body')
+var wordCountEl = document.getElementById('word-count')
+function updateWordCount() {
+	const postBodyModified = postBody.value
+		.replace(/[^a-zA-Z ]/, '')
+		.replace(/ +/, ' ')
+		.replace(/^\s\s*/, '')
+		.replace(/\s\s*$/, '')
+	var wordCount
+	if (postBodyModified == 0)
+		wordCount = 0
+	else
+		wordCount = postBodyModified.split(' ').length
+	if (wordCount == 1)
+		wordCountEl.innerHTML = '1 word long'
+	else
+		wordCountEl.innerHTML = wordCount + ' words long'
+}
+postBody.addEventListener('input', updateWordCount)
+var textareas = document.getElementsByTagName('textarea')
+var count = textareas.length;
+for(var i=0;i<count;i++){
+	textareas[i].onkeydown = function(e){
+		if(e.keyCode==9 || e.which==9){
+			e.preventDefault();
+			var s = this.selectionStart;
+			this.value = this.value.substring(0,this.selectionStart) + '\t' + this.value.substring(this.selectionEnd);
+			this.selectionEnd = s + 1; 
+		}
+	}
+}
+
+updateWordCount()
+
+},false)
+
+function preview() {
+	var form = document.getElementById('post-form')
+	form.target = '_blank'
+	form.action = '/blog/preview';
+	form.submit()
+	form.action = '{% if new %}/blog/new {% else %}/blog/edit{% endif %}'
+	form.target = ''
+}
+
+</script>
+{% endblock %}
+{% block body %}
+<div class="viewport-height">
+	<div class="center-vertical-container">
+		<div class="table-center">
+			<div id="newpost">
+				<h1 class="title-2">Edit post</h1>
+				<form action="{% if new %}/blog/new {% else %}/blog/edit{% endif %}" method="post" enctype="multipart/form-data" id="post-form">
+					{% if not new %}
+					<input type="text" value="{{ p.slug }}" name="slug" id="slug" hidden>
+					{% endif %}
+					<div class="form-group">
+						<label for="post-title">Title</label>
+						<input type="text" class="form-control w-100" id="post-title" placeholder="Enter title" name="title" {% if not new %} value="{{ p.title }}"{% endif %}>
+					</div>
+					<div class="form-group">
+						<label for="post-body">Content</label>
+						<textarea class="form-control" id="post-body" rows="8" name="body" required>{% if not new %}{{ p.content }}{% endif %}</textarea>
+					</div>
+					<label for="unlisted">Unlisted</label><input type="checkbox" name="unlisted" id="unlisted" {% if not new and p.hidden %}checked{% endif %}><br>
+					<div id="word-count-container"><span id="word-count"></span></div>
+					{% if new %}
+						<button type="submit" class="big-button">Publish</button>
+					{% else %}
+						<button type="submit" class="big-button">Update</button>
+					{% endif %}
+					<button type="button" onclick="preview()" class="big-button">Preview</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	{% block footer %}
+	{{ super() }}
+	{% endblock %}
+</div>
+{% endblock %}
