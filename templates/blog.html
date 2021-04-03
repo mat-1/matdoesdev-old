@@ -35,8 +35,8 @@ i {
 	padding-bottom: 2em;
 	font-style: normal;
 }
-h2 {
-	margin-bottom: 0;
+.listed-blog-post-title {
+	margin-top: 1em;
 }
 </style>
 <div class="viewport-height">
@@ -60,7 +60,7 @@ h2 {
 	{% for p in posts|reverse %}
 	<div class="blog-post">
 		<a style="color:inherit;text-decoration:none{% if p.hidden %};opacity:.5{% endif %}" href="/blog/post/{{ p.slug }}">
-			<h2>{{ p.title }}</h2>
+			<h2 class="listed-blog-post-title">{{ p.title }}</h2>
 			<i>{% if p.hidden %}[HIDDEN] {% endif %}Posted {{ p.timeago }}</i>
 			<div class="preview">
 				{% if p.image %}

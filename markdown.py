@@ -51,11 +51,11 @@ Horizontal rule:
 
 
 Image:
-[description](https://image)
+![description](https://image)
 Left image:
-,[description](https://image)
+,![description](https://image)
 Right image:
-.[description](https://image)
+.![description](https://image)
 
 '''
 
@@ -185,12 +185,12 @@ def parse_markdown(content, nofollow=True):
 	content = re.sub(r'\|\|(.{1,}?)\|\|', r'<span class="center">\1</span>', content)
 
 	# titles
-	content = re.sub(r'^###### (.+)\n', r'<h6>\1</h6>\n', content, flags=re.MULTILINE)
-	content = re.sub(r'^##### (.+)\n', r'<h6>\1</h6>\n', content, flags=re.MULTILINE)
-	content = re.sub(r'^#### (.+)\n', r'<h5>\1</h5>\n', content, flags=re.MULTILINE)
-	content = re.sub(r'^### (.+)\n', r'<h4>\1</h4>\n', content, flags=re.MULTILINE)
-	content = re.sub(r'^## (.+)\n', r'<h3>\1</h3>\n', content, flags=re.MULTILINE)
-	content = re.sub(r'^# (.+)\n', r'<h2>\1</h2>\n', content, flags=re.MULTILINE)
+	content = re.sub(r'^###### (.+)\n', r'\n<h6>\1</h6>', content, flags=re.MULTILINE)
+	content = re.sub(r'^##### (.+)\n', r'\n<h6>\1</h6>', content, flags=re.MULTILINE)
+	content = re.sub(r'^#### (.+)\n', r'\n<h5>\1</h5>', content, flags=re.MULTILINE)
+	content = re.sub(r'^### (.+)\n', r'\n<h4>\1</h4>', content, flags=re.MULTILINE)
+	content = re.sub(r'^## (.+)\n', r'\n<h3>\1</h3>', content, flags=re.MULTILINE)
+	content = re.sub(r'^# (.+)\n', r'\n<h2>\1</h2>', content, flags=re.MULTILINE)
 
 	# horizontal rule
 	content = re.sub(r'\n([-_*])\1{2,}\n', '<hr>\n', content)
