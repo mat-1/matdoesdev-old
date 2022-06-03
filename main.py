@@ -330,6 +330,8 @@ async def middleware(request, handler):
 	else:
 		if r.content_type == 'application/octet-stream':
 			r.content_type = 'text/plain'
+	if path.startswith('/.well-known'):
+		r.headers['Access-Control-Allow-Origin'] = '*'
 	try:
 		r = await custom_replace(r, request)
 	except AttributeError:

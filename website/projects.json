@@ -1,7 +1,23 @@
 [
+	
+	{
+		"name": "i.matdoes.dev",
+		"description": "A simple image uploader, but rewritten in Rust.",
+		"url": "https://github.com/mat-1/rust-image-host"
+	},
+	{
+		"name": "Web Utils",
+		"description": "A site inspired by devutils but as a website",
+		"url": "https://u.matdoes.dev"
+	},
+	{
+		"name": "mat's rss reader",
+		"description": "A simple RSS reader",
+		"url": "https://rss.matdoes.dev"
+	},
 	{
 		"name": "Metasearch",
-		"description": "An open source metasearch engine written in NodeJS",
+		"description": "An open source metasearch engine written in TypeScript",
 		"url": "https://s.matdoes.dev"
 	},
 	{
@@ -10,7 +26,7 @@
 		"url": "https://www.youtube.com/channel/UCz5bLto2bC9fSC5N429WDnw"
 	},
 	{
-		"name": "DreamSMP tracker",
+		"name": "DreamSMP tracker [dead]",
 		"description": "Tracks when DreamSMP members play and livestream",
 		"url": "https://dreamsmp.live/"
 	},
@@ -20,9 +36,9 @@
 		"url": "https://wynnleamoe.matdoes.dev/"
 	},
 	{
-		"name": "Forum Sweats",
-		"description": "A Discord server and bot focused around the Hypixel forums, with many useful moderation, utility, and fun commands",
-		"url": "https://forumsweats.matdoes.dev/"
+		"name": "Forum Sweats [dead]",
+		"description": "A Discord bot with many useful and unique features.",
+		"url": "https://github.com/mat-1/forum-sweats/"
 	},
 	{
 		"name": "Minecraft Assets",
@@ -60,9 +76,9 @@
 		"url": "https://http.matdoes.dev"
 	},
 	{
-		"name": "4bit",
+		"name": "4bit [dead]",
 		"description": "A fun utility bot for Discord.",
-		"url": "https://4bitbot.tk"
+		"url": "https://web.archive.org/web/20190502100718/https://4bitbot.tk/"
 	},
 	{
 		"name": "Repl Talk API",
@@ -70,9 +86,9 @@
 		"url": "https://pypi.org/project/repltalk/"
 	},
 	{
-		"name": "i.matdoes.dev",
+		"name": "old i.matdoes.dev [dead]",
 		"description": "Simple anonymous image uploader.",
-		"url": "https://i.matdoes.dev"
+		"url": "https://github.com/mat-1/i.matdoes.dev"
 	},
 	{
 		"name": "Repl Talk Bot",
